@@ -1,8 +1,8 @@
 #include "keyboard.h"
 #include "helper.h"
-unsigned char read_code()
+uint8_t read_code()
 {
-  unsigned char scan_code = 0;
+  uint8_t scan_code = 0;
   do
   {
     while (!inb(KBD_STAUS_PORT_I8042_PS) & 1)
@@ -11,7 +11,7 @@ unsigned char read_code()
   } while (scan_code & 0x80);
   return scan_code;
 }
-unsigned char default_keymap[128] = {
+uint8_t default_keymap[128] = {
     0,                           // 0x00 Null
     27,                          // 0x01 Escape
     '1',                         // 0x02
