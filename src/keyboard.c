@@ -13,7 +13,7 @@ uint8_t read_code()
     {
       HOLD_SHIFT = 0;
     }
-    if (scan_code == KBD_RIGHT_SHIFT_PS || scan_code == KBD_LEFT_SHIT_PS)
+    if (scan_code == KBD_RIGHT_SHIFT_PS || scan_code == KBD_LEFT_SHIFT_PS)
     {
       HOLD_SHIFT = 1;
     }
