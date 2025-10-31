@@ -1,5 +1,6 @@
 #ifndef SCREEN_H
 #define SCREEN_H
+#include "types.h"
 
 #define SCREEN_BLACK 0x00
 #define SCREEN_BLUE 0x01
@@ -19,6 +20,6 @@
 #define SCREEN_WHITE 0x0F
 
 void init_screen(void);
-void write_screen(int fg, int bg, const char *string);
+void write_screen(int fg, int bg, const uint8_t *string);
 
 #endif
