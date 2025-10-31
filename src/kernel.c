@@ -22,7 +22,7 @@ void kmain()
     }
     uint8_t buf[2] = {c, 0};
     write_screen(SCREEN_RED, SCREEN_BLACK, buf);
-    write_screen(SCREEN_RED, SCREEN_BLACK, " ");
+    wait_for_key_release(scan_code);
   }
   for (;;)
   {

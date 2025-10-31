@@ -4,22 +4,57 @@ uint8_t HOLD_SHIFT = 0x0;
 uint8_t read_code()
 {
   uint8_t scan_code = 0;
-  do
+  while (1)
   {
     while (!inb(KBD_STAUS_PORT_I8042_PS) & 1)
       ;
+
     scan_code = inb(KBD_DATA_PORT_I8042_PS);
-    if (scan_code == KBD_LEFT_SHIFT_RELEASE_PS || scan_code == KBD_RIGHT_SHIFT_RELEASE_PS)
+    if (!(scan_code & 0x80))
+    {
+      if (scan_code == KBD_RIGHT_SHIFT_PS || scan_code == KBD_LEFT_SHIFT_PS)
+      {
+        HOLD_SHIFT = 1;
+      }
+      else
+      {
+        return scan_code;
+      }
+    }
+    else
+    {
+      if (scan_code == KBD_LEFT_SHIFT_RELEASE_PS || scan_code == KBD_RIGHT_SHIFT_RELEASE_PS)
+      {
+        HOLD_SHIFT = 0;
+      }
+    }
+  }
+}
+void wait_for_key_release(uint8_t press_scan_code)
+{
+  uint8_t release_scan_code = press_scan_code | 0x80;
+  uint8_t sc;
+
+  while (1)
+  {
+    while (!inb(KBD_STAUS_PORT_I8042_PS) & 1)
+      ;
+    sc = inb(KBD_DATA_PORT_I8042_PS);
+
+    if (sc == KBD_LEFT_SHIFT_RELEASE_PS || sc == KBD_RIGHT_SHIFT_RELEASE_PS)
     {
       HOLD_SHIFT = 0;
     }
-    if (scan_code == KBD_RIGHT_SHIFT_PS || scan_code == KBD_LEFT_SHIFT_PS)
+    else if (sc == KBD_RIGHT_SHIFT_PS || sc == KBD_LEFT_SHIFT_PS)
     {
       HOLD_SHIFT = 1;
     }
+    if (sc == release_scan_code)
+    {
+      return;
+    }
 
-  } while (scan_code & 0x80);
-  return scan_code;
+  }
 }
 uint8_t default_keymap[128] = {
     0,                           // 0x00 Null

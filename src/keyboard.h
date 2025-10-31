@@ -9,5 +9,7 @@
 #define KBD_RIGHT_SHIFT_RELEASE_PS 0xB6
 extern uint8_t HOLD_SHIFT;
 uint8_t read_code();
+void wait_for_key_release(uint8_t press_scan_code);
+
 extern uint8_t default_keymap[];
 #endif
