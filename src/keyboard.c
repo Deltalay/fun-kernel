@@ -1,5 +1,6 @@
 #include "keyboard.h"
 #include "helper.h"
+uint8_t HOLD_SHIFT = 0x0;
 uint8_t read_code()
 {
   uint8_t scan_code = 0;
@@ -8,6 +9,15 @@ uint8_t read_code()
     while (!inb(KBD_STAUS_PORT_I8042_PS) & 1)
       ;
     scan_code = inb(KBD_DATA_PORT_I8042_PS);
+    if (scan_code == KBD_LEFT_SHIFT_RELEASE_PS || scan_code == KBD_RIGHT_SHIFT_RELEASE_PS)
+    {
+      HOLD_SHIFT = 0;
+    }
+    if (scan_code == KBD_RIGHT_SHIFT_PS || scan_code == KBD_LEFT_SHIT_PS)
+    {
+      HOLD_SHIFT = 1;
+    }
+
   } while (scan_code & 0x80);
   return scan_code;
 }

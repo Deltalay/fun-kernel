@@ -1,6 +1,6 @@
 #ifndef HELPER_H
 #define HELPER_H
-// INBOUND
+
 static inline unsigned char inb(unsigned short port)
 {
   unsigned char ret;

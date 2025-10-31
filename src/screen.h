@@ -1,7 +1,6 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-// (Your color definitions are here)
 #define SCREEN_BLACK 0x00
 #define SCREEN_BLUE 0x01
 #define SCREEN_GREEN 0x02
