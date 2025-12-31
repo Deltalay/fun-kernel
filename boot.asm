@@ -21,23 +21,24 @@ header_end:
 section .text
 global start
 extern kmain
+extern gdt_ptr;
 
 start:
     cli             
-
+    
     ; Set up segments
     mov esp, 0x200000   
-    mov ax, 0x10
+    call kmain
+    lgdt [gdt_ptr]
+    jmp 0x08:flush_cs
+  
+flush_cs:
+    mov ax, 0x10         ; Data segment selector (0x10)
     mov ds, ax
     mov es, ax
     mov fs, ax
     mov gs, ax
-    ; mov ss, ax
-
-    push eax
-    push ebx
-    call kmain
-
+    mov ss, ax   
 hang:
     hlt
     jmp hang
